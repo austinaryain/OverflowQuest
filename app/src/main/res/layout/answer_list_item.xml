@@ -25,7 +25,7 @@
                     android:id="@+id/wv_answer_body" android:layout_height="wrap_content">
             </WebView>
             <Button
-                    android:text="Correct Answer"
+                    android:text="Accepted Answer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_correct_answer"

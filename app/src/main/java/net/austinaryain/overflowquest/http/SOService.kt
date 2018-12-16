@@ -11,6 +11,7 @@ import org.json.JSONObject
 
 
 open class SOService {
+
     private val QUESTION_FILTER: String = "!)5IW-5QvYx.h(*2yhEafL-9rg0bY"
     private val ACCESS_TOKEN: String = "YOUR_ACCESS_TOKEN"
     private val CLIENT_KEY: String = "YOUR_CLIENT_KEY"
@@ -19,6 +20,7 @@ open class SOService {
     private val API_BASE: String = "https://api.stackexchange.com/2.2/"
 
     private var questions: MutableList<Question> = mutableListOf()
+
     private val gson: Gson = Gson()
 
     fun getQuestions(): MutableList<Question> {
@@ -51,10 +53,9 @@ open class SOService {
                     val Jarray = Jobject.getJSONArray("items")
                     for (i in 0 until Jarray.length()) {
                         var obj = Jarray.getJSONObject(i)
-                        if (obj.optBoolean("is_answered", false) && obj.optInt(
-                                "answer_count",
-                                0
-                            ) > 1 && obj.optInt("accepted_answer_id", 0) > 0
+                        if (obj.optBoolean("is_answered", false) &&
+                            obj.optInt("answer_count", 0) > 1 &&
+                            obj.optInt("accepted_answer_id", 0) > 0
                         ) {
 
                             var answerArray = obj.getJSONArray("answers")

@@ -25,7 +25,6 @@ class QuestionGuessActivity : AppCompatActivity() {
 
         rv_answers.layoutManager = LinearLayoutManager(this)
         rv_answers.adapter = AnswersAdapter(question.answers, this)
-
     }
 
 }
