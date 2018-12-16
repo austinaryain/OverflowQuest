@@ -1,3 +1,14 @@
 package net.austinaryain.overflowquest.data
 
-data class Answer(val body: String, val userSelect: Boolean)
+import java.io.Serializable
+
+data class Answer(
+    val accepted: Boolean,
+    val is_accepted: Boolean,
+    val score: Int,
+    val answer_id: Int,
+    val question_id: Int,
+    val body_markdown: String,
+    val body: String,
+    val userSelected: Boolean
+) : Serializable

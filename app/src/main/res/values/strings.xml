@@ -3,4 +3,8 @@
     <string name="title_activity_main">Overflow Quest</string>
     <string name="title_questions">Questions</string>
     <string name="title_guesses">Guesses</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="answers_title_string">ANSWERS</string>
 </resources>
