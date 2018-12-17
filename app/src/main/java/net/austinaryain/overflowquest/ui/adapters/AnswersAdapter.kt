@@ -1,7 +1,7 @@
 package net.austinaryain.overflowquest.ui.adapters
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,6 @@ open class AnswersAdapter(private val answers: MutableList<Answer>, private val 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.answerBody.loadData(answers[position].body, "text/html", "UTF-8")
-
         holder.correctButton.setOnClickListener {
             var wasCorrect = "Sorry, that is not the right answer..."
             if (answers[position].is_accepted) {

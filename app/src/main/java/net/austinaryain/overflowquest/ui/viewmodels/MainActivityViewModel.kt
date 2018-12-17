@@ -1,6 +1,6 @@
 package net.austinaryain.overflowquest.ui.viewmodels
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import net.austinaryain.overflowquest.data.Question
 
 open class MainActivityViewModel : ViewModel() {

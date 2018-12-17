@@ -1,15 +1,15 @@
 package net.austinaryain.overflowquest.data
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import io.reactivex.annotations.NonNull
-import org.jetbrains.annotations.NonNls
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity
 data class Question(
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val question_id: Long,
     val is_answered: Boolean,
     val accepted_answer_id: Long,
