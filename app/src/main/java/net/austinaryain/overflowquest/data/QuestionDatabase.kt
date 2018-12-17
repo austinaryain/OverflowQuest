@@ -1,12 +1,11 @@
 package net.austinaryain.overflowquest.data
 
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import android.content.Context
+import androidx.room.*
 import net.austinaryain.overflowquest.util.Constants
 
-@Database(entities = [Question::class], version = 1)
+@Database(entities = [Question::class, Answer::class], version = 1, exportSchema = false)
+//@TypeConverters(AnswerConverter::class)
 abstract class QuestionDatabase : RoomDatabase() {
 
     abstract fun questionsDao(): QuestionDao

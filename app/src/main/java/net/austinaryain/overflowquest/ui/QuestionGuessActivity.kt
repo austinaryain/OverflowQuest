@@ -10,10 +10,9 @@ import net.austinaryain.overflowquest.R
 import net.austinaryain.overflowquest.data.Question
 import net.austinaryain.overflowquest.databinding.ActivityQuestionGuessBinding
 import net.austinaryain.overflowquest.ui.adapters.AnswersAdapter
-import net.austinaryain.overflowquest.ui.adapters.OnAnwerClickListener
 import net.austinaryain.overflowquest.ui.viewmodels.MainActivityViewModel
 
-class QuestionGuessActivity : AppCompatActivity(), OnAnwerClickListener {
+class QuestionGuessActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQuestionGuessBinding
 
@@ -32,10 +31,6 @@ class QuestionGuessActivity : AppCompatActivity(), OnAnwerClickListener {
         question.answers.sortBy { answer -> answer.body }
         rv_answers.layoutManager = LinearLayoutManager(this)
         rv_answers.adapter = AnswersAdapter(question.answers, this)
-    }
-
-    override fun onAnswerClick(question: Question) {
-        mViewModel.answeredQuestions.add(question)
     }
 
 }

@@ -11,10 +11,10 @@ interface QuestionDao {
     @Insert
     fun insertQuestions(questions: MutableList<Question>)
 
-    @Query("SELECT * FROM Question WHERE question_id = :questionId")
+    @Query("SELECT * FROM questions WHERE question_id = :questionId")
     fun getQuestionById(questionId: Long): Question
 
-    @Query("SELECT * FROM Question WHERE guessed = :guessed")
+    @Query("SELECT * FROM questions WHERE guessed = :guessed")
     fun getGuessedQuestions(guessed: Boolean): MutableList<Question>
 
     @Update

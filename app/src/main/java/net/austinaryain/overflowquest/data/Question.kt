@@ -2,10 +2,11 @@ package net.austinaryain.overflowquest.data
 
 import androidx.annotation.NonNull
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity
+@Entity(tableName = "questions")
 data class Question(
     @NonNull
     @PrimaryKey(autoGenerate = true)
@@ -18,6 +19,7 @@ data class Question(
     val body_markdown: String,
     val title: String,
     val body: String,
-    var answers: MutableList<Answer>,
-    val guessed: Boolean
+    val guessed: Boolean,
+    @Ignore
+    var answers: MutableList<Answer>
 ) : Serializable

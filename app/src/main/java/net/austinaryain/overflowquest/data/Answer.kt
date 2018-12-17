@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity
+@Entity(tableName = "answers")
 data class Answer(
     @NonNull
     @PrimaryKey(autoGenerate = true)

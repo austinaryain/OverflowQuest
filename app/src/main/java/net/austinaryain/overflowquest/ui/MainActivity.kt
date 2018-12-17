@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.austinaryain.overflowquest.R
+import net.austinaryain.overflowquest.data.QuestionDao
+import net.austinaryain.overflowquest.data.QuestionDatabase
 import net.austinaryain.overflowquest.databinding.ActivityMainBinding
 import net.austinaryain.overflowquest.http.ApiHelper
 import net.austinaryain.overflowquest.http.OnDataCallback
@@ -24,6 +26,9 @@ class MainActivity : AppCompatActivity(), OnDataCallback<QuestionsResponse> {
     private val mViewModel: MainActivityViewModel by lazy {
         ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
     }
+
+    private lateinit var db: QuestionDatabase
+    private lateinit var questionDao: QuestionDao
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -47,6 +52,9 @@ class MainActivity : AppCompatActivity(), OnDataCallback<QuestionsResponse> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        db = QuestionDatabase.getAppDataBase(this@MainActivity)!!
+        questionDao = db.questionsDao()
 
         var apiHelper = ApiHelper()
 
