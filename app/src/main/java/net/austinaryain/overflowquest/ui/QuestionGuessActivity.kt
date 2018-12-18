@@ -18,16 +18,20 @@ class QuestionGuessActivity : AppCompatActivity() {
 
     var answerDao = AppDatabase.getAppDataBase(this)?.answersDao()
     var questionDao = AppDatabase.getAppDataBase(this)?.questionsDao()
+    private var questionId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_question_guess)
 
-        val questionId: Int = intent.getIntExtra("questionId", 0)
+        questionId = intent.getIntExtra("questionId", 0)
 
+        updateUI()
+    }
+
+    private fun updateUI() {
         doAsync {
             var answers = answerDao?.getAnswersByQuestionId(questionId)
-            var allAnswers = answerDao?.getAllAnswers()
             var question = questionDao?.getQuestionById(questionId)
             answers?.sortBy { answer -> answer.body }
             uiThread {
