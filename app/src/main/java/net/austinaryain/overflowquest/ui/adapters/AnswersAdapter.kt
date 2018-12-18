@@ -11,13 +11,11 @@ import net.austinaryain.overflowquest.R
 import net.austinaryain.overflowquest.data.AppDatabase
 import net.austinaryain.overflowquest.data.answer.Answer
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 
 open class AnswersAdapter(private val answers: MutableList<Answer>, private val context: Context) :
     RecyclerView.Adapter<AnswersAdapter.ViewHolder>() {
 
-    var answerDao = AppDatabase.getAppDataBase(context)?.answersDao()
     var questionDao = AppDatabase.getAppDataBase(context)?.questionsDao()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,9 +36,6 @@ open class AnswersAdapter(private val answers: MutableList<Answer>, private val 
                 var question = questionDao?.getQuestionById(answers[position].question_id)
                 question?.guessed = true
                 questionDao?.insertSingleQuestion(question!!)
-                uiThread {
-
-                }
             }
             Toast.makeText(context, wasCorrect, Toast.LENGTH_SHORT).show()
         }
@@ -53,7 +48,6 @@ open class AnswersAdapter(private val answers: MutableList<Answer>, private val 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val answerBody = view.wv_answer_body!!
         val correctButton = view.btn_correct_answer!!
-        val backingView = view
     }
 }
 

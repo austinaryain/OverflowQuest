@@ -1,6 +1,8 @@
 package net.austinaryain.overflowquest.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -41,10 +43,12 @@ class MainActivity : AppCompatActivity(), OnDataCallback<QuestionsResponse> {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_questions -> {
+                mViewModel.selectedTab = R.id.navigation_questions
                 loadUnguessedQuestions()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_guesses -> {
+                mViewModel.selectedTab = R.id.navigation_guesses
                 loadGuessedQuestions()
                 return@OnNavigationItemSelectedListener true
             }
@@ -61,30 +65,40 @@ class MainActivity : AppCompatActivity(), OnDataCallback<QuestionsResponse> {
         questionDao = db.questionsDao()
         answerDao = db.answersDao()
 
-        loadUnguessedQuestions()
+        var guessed = mViewModel.selectedTab == R.id.navigation_guesses
+
+        loadQuestions(guessed)
 
         apiHelper = ApiHelper()
 
-        apiHelper.getQuestions(this)
+        if (!guessed) apiHelper.getQuestions(this)
+
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                filterQuestions(p0.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
     override fun onSuccess(data: QuestionsResponse) {
-        if (mViewModel.unansweredQuestions.isEmpty() || mViewModel.unansweredQuestions.count() < 25) {
+        if (mViewModel.unansweredQuestions.isEmpty() || mViewModel.unansweredQuestions.count() < 10) {
             mViewModel.unansweredQuestions.addAll(data.acceptedAnswerQuestions())
             doAsync {
-                //=== DEBUG ONLY DANGER
-                //questionDao.deleteAllQuestions()
-                //answerDao.deleteAllAnswers()
-                //=== DEBUG ONLY DANGER
                 questionDao.insertQuestions(data.acceptedAnswerQuestions())
                 for (question in data.acceptedAnswerQuestions()) {
                     answerDao.insertAnswers(question.answers)
                 }
             }
         }
-
         rv_questions.layoutManager = LinearLayoutManager(this)
         rv_questions.adapter = QuestionsAdapter(mViewModel.unansweredQuestions, this)
         (rv_questions.adapter as QuestionsAdapter).notifyDataSetChanged()
@@ -110,9 +124,10 @@ class MainActivity : AppCompatActivity(), OnDataCallback<QuestionsResponse> {
             }
 
             uiThread {
-                rv_questions.adapter = QuestionsAdapter(questions, this@MainActivity)
-                rv_questions.adapter?.notifyDataSetChanged()
-                rv_questions.invalidate()
+                rv_questions.layoutManager = LinearLayoutManager(this@MainActivity)
+                var newAdapter = QuestionsAdapter(questions, this@MainActivity)
+                rv_questions.swapAdapter(newAdapter, true)
+                progressBar.visibility = View.GONE
             }
         }
     }
@@ -136,5 +151,13 @@ class MainActivity : AppCompatActivity(), OnDataCallback<QuestionsResponse> {
     private fun loadUnguessedQuestions() {
         loadQuestions(false)
     }
+
+    private fun filterQuestions(s: String) {
+        var filteredList =
+            mViewModel.unansweredQuestions.filter { question -> question.body.contains(s, true) } as MutableList
+        var newAdapter = QuestionsAdapter(filteredList, this@MainActivity)
+        rv_questions.swapAdapter(newAdapter, true)
+    }
+
 
 }

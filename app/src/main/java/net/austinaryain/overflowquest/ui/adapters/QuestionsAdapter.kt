@@ -12,7 +12,7 @@ import net.austinaryain.overflowquest.R
 import net.austinaryain.overflowquest.data.question.Question
 import net.austinaryain.overflowquest.ui.QuestionGuessActivity
 
-open class QuestionsAdapter(private val questions: MutableList<Question>, private val context: Context) :
+open class QuestionsAdapter(private var questions: MutableList<Question>, private val context: Context) :
     RecyclerView.Adapter<QuestionsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
