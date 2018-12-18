@@ -7,7 +7,7 @@ open class Constants {
         const val ACCESS_TOKEN: String = "YOUR_ACCESS_TOKEN"
         const val CLIENT_KEY: String = "YOUR_CLIENT_KEY"
         const val API_BASE: String = "https://api.stackexchange.com/2.2/"
-        const val DATABASE_NAME: String = "questions.db"
+        const val DATABASE_NAME: String = "appdata.db"
     }
 
 }

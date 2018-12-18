@@ -1,15 +1,13 @@
 package net.austinaryain.overflowquest.http
 
 import com.google.gson.GsonBuilder
-import net.austinaryain.overflowquest.data.Question
-import retrofit2.converter.gson.GsonConverterFactory
 import net.austinaryain.overflowquest.util.Constants
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import java.lang.reflect.Modifier
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiHelper {
 

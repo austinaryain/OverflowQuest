@@ -2,16 +2,15 @@ package net.austinaryain.overflowquest.ui.adapters
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.question_list_item.view.*
 import net.austinaryain.overflowquest.R
-import net.austinaryain.overflowquest.data.Question
+import net.austinaryain.overflowquest.data.question.Question
 import net.austinaryain.overflowquest.ui.QuestionGuessActivity
-
 
 open class QuestionsAdapter(private val questions: MutableList<Question>, private val context: Context) :
     RecyclerView.Adapter<QuestionsAdapter.ViewHolder>() {
@@ -25,8 +24,8 @@ open class QuestionsAdapter(private val questions: MutableList<Question>, privat
         holder.answerCount.text = questions[position].answer_count.toString()
 
         holder.backingView.setOnClickListener {
-            val intent: Intent = Intent(context, QuestionGuessActivity::class.java)
-            intent.putExtra("Question", questions[position])
+            val intent = Intent(context, QuestionGuessActivity::class.java)
+            intent.putExtra("questionId", questions[position].question_id.toInt())
             startActivity(context, intent, null)
         }
     }
